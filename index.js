@@ -51,7 +51,7 @@ client.on('ready', async () => {
 
     const getRule = (ruleNumber) => {
         if(getRules.rules[ruleNumber - 1] !== undefined){
-            return getRules.rules[ruleNumber - 1]
+            return "```["+ ruleNumber - 1 +"] - " + getRules.rules[ruleNumber - 1] + "```"
         } else {
             return 404
         }
@@ -71,7 +71,7 @@ client.on('ready', async () => {
 
             // Et si ce quelqu'un est macsim, on envoi évidemment, la rule qui va bien
             if (message.author.id === macsimId) {
-                message.reply("```[11] - " + getRule(11).text + "```")
+                message.reply(getRule(11))
             }
         }
 
@@ -82,7 +82,7 @@ client.on('ready', async () => {
             if(getRule(ruleNumber) === 404){
                 message.reply("Cette rule n'existe pas")
             } else {
-                message.reply("```["+ ruleNumber +"] - " + getRule(ruleNumber).text + "```")
+                message.reply(getRule(ruleNumber))
             }
 
         }
@@ -98,7 +98,7 @@ client.on('ready', async () => {
 
             // Si Aymeric envoi un lien, on rappel la rule 1 !
             if (message.content.match(regex1)) {
-                message.reply("```[1] - " + getRule(1).text + "```")
+                message.reply(getRule(1))
             }
         }
 
