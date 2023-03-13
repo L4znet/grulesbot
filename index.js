@@ -1,0 +1,108 @@
+const { Client, GatewayIntentBits } = require('discord.js')
+const fs = require("fs");
+
+require('dotenv').config()
+const token = process.env.TOKEN
+const client = new Client({ intents: [ 
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent] });
+
+
+const getRules = JSON.parse(fs.readFileSync("./rules.json"));
+const aymericId = "208262462942871553";
+const macsimId = "350663282383912970";
+const {createClient} = require('redis')
+const cron = require("node-cron");
+const nothingGif = "https://tenor.com/b15s2.gif"
+const options = {
+        timeZone: 'Europe/Paris',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+    },
+    formatter = new Intl.DateTimeFormat([], options);
+
+const regex1 = new RegExp(/https?:\/\/(.)+/g);
+const redisClient = createClient({
+    username:process.env.REDIS_USERNAME,
+    password: process.env.REDIS_PASSWORD,
+    socket: {
+        host: process.env.REDIS_HOST,
+        port: 17356
+    }
+});
+
+
+client.on('ready', async () => {
+
+    await redisClient.connect()
+
+    const toggleAumericCounterState = async (value) => {
+        await redisClient.set('firstAymericMessageSent', value);
+    }
+    const getAymericCounterState = async () => {
+        return await redisClient.get('firstAymericMessageSent');
+    }
+
+    const getRule = (ruleNumber) => {
+        if(getRules.rules[ruleNumber - 1] !== undefined){
+            return getRules.rules[ruleNumber - 1]
+        } else {
+            return 404
+        }
+    }
+
+
+    cron.schedule('0 0 * * *', async () => {
+        toggleAumericCounterState(false)
+    });
+
+
+    client.on("messageCreate", (message) => {
+
+        // Si quelqu'un écrit "Y'a rien" on envoi le gif
+        if (message.content.toLowerCase() === "y'a rien" || message.content.toLowerCase() === "y a rien") {
+            message.reply(nothingGif)
+
+            // Et si ce quelqu'un est macsim, on envoi évidemment, la rule qui va bien
+            if (message.author.id === macsimId) {
+                message.reply("```[11] - " + getRule(11).text + "```")
+            }
+        }
+
+        // Ici on invoque une rule en fonction de son numéro
+        if (message.content.startsWith("/grules")) {
+            const ruleNumber = message.content.match(/([0-9]?[0-9])/)[0]
+
+            if(getRule(ruleNumber) === 404){
+                message.reply("Cette rule n'existe pas")
+            } else {
+                message.reply("```["+ ruleNumber +"] - " + getRule(ruleNumber).text + "```")
+            }
+
+        }
+
+        // Si Aymeric envoi un message
+        if (message.author.id === aymericId) {
+
+            // Si Aymeric n'a pas encore envoyé son premier message
+            if (!getAymericCounterState()) {
+                toggleAumericCounterState(true) // On passe le state à true, et on dit qu'Aymeric est hyper sus.
+                message.reply("Mec t'es sus")
+            }
+
+            // Si Aymeric envoi un lien, on rappel la rule 1 !
+            if (message.content.match(regex1)) {
+                message.reply("```[1] - " + getRule(1).text + "```")
+            }
+        }
+
+    });
+});
+
+client.login(token);
