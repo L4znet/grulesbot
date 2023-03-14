@@ -37,6 +37,8 @@ const redisClient = createClient({
     }
 });
 
+const whitelist = ["https://media.discordapp.net", "https://tenor.com"]
+
 
 client.on('ready', async () => {
 
@@ -105,12 +107,14 @@ client.on('ready', async () => {
 
             // Si Aymeric envoi un lien, on rappel la rule 1 !
             if (message.content.match(regex1)) {
-                if(!message.content.startsWith('https://tenor.com') ||!message.content.startsWith("https://media.discordapp.net")){
+
+                console.log(whitelist.filter(whiteListItem => whiteListItem.startsWith(message.content)))
+
+            /*    if(!message.content.startsWith('https://tenor.com')){
                     message.reply(getRule(1))
-                }
+                }*/
             }
         }
-
     });
 });
 
