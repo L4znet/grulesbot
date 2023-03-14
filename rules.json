@@ -87,6 +87,10 @@
     {
       "ruleNumber": 22,
       "text": "...et si vraiment tu ne sais toujours pas quoi faire.. écoute le cou... vas sur 9gag"
+    },
+    {
+      "ruleNumber":99,
+      "text":"Si tu sais toujours toujours pas quoi faire.. fais un bot discord pour lister ces putains de rules"
     }
   ]
 }

@@ -78,7 +78,7 @@ client.on('ready', async () => {
 
         // Ici on invoque une rule en fonction de son numéro
         if (message.content.startsWith("/grules")) {
-            const ruleNumber = message.content.match(/(\/grules) ([0-9]?[0-9]?[0-9]?[0-9])/)
+            const ruleNumber = message.content.match(/(\/grules) ([0-9]?[0-9]?[0-9]?[0-9]?[0-9])/)
             if(ruleNumber !== null){
                 if(getRule(ruleNumber[2]) === 404){
                     message.reply("Cette rule n'existe pas")
