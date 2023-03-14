@@ -105,7 +105,9 @@ client.on('ready', async () => {
 
             // Si Aymeric envoi un lien, on rappel la rule 1 !
             if (message.content.match(regex1)) {
-                message.reply(getRule(1))
+                if(!message.content.startsWith('https://tenor.com')){
+                    message.reply(getRule(1))
+                }
             }
         }
 
