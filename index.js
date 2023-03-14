@@ -51,11 +51,14 @@ client.on('ready', async () => {
 
     const getRule = (ruleNumber) => {
 
-        if(getRules.rules[ruleNumber - 1] !== undefined){
-            return "```["+ ruleNumber +"] - " + getRules.rules[ruleNumber - 1].text + "```"
+       const rule = getRules.rules.filter(rule => rule.ruleNumber === parseInt(ruleNumber));
+
+        if(rule[0] !== undefined){
+            return "```["+ rule[0].ruleNumber +"] - " + rule[0].text + "```"
         } else {
             return 404
         }
+
     }
 
 
@@ -79,6 +82,7 @@ client.on('ready', async () => {
         // Ici on invoque une rule en fonction de son numéro
         if (message.content.startsWith("/grules")) {
             const ruleNumber = message.content.match(/(\/grules) ([0-9]?[0-9]?[0-9]?[0-9]?[0-9])/)
+
             if(ruleNumber !== null){
                 if(getRule(ruleNumber[2]) === 404){
                     message.reply("Cette rule n'existe pas")
