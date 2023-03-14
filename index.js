@@ -10,7 +10,7 @@ const client = new Client({ intents: [
 
 
 const getRules = JSON.parse(fs.readFileSync("./rules.json"));
-const aymericId = "208262462942871553";
+const aymericId = "101272783849291776";
 const macsimId = "350663282383912970";
 const {createClient} = require('redis')
 const cron = require("node-cron");
@@ -108,11 +108,11 @@ client.on('ready', async () => {
             // Si Aymeric envoi un lien, on rappel la rule 1 !
             if (message.content.match(regex1)) {
 
-                console.log(whitelist.filter(whiteListItem => whiteListItem.startsWith(message.content)))
+                const result = whitelist.filter(whiteListItem => message.content.startsWith(whiteListItem))
 
-            /*    if(!message.content.startsWith('https://tenor.com')){
+                if(result.length === 0){
                     message.reply(getRule(1))
-                }*/
+                }
             }
         }
     });
