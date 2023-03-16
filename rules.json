@@ -101,6 +101,10 @@
       "text": "Ne pas taper ce qu'Aymeric te dit de taper, peu importe que ce soit sur Google ou IRL..."
     },
     {
+      "ruleNumber": 26,
+      "text": "Quand quelqu'un dit un truc qui commence par \"Di..\" tu dois dire la fin, par exemple \"Différent\" > fférent.\n Divergeant > vergeant\nDiversion > version \n Discord > scord"
+    },
+    {
       "ruleNumber": 999,
       "text":"Si tu sais toujours toujours pas quoi faire.. fais un bot discord pour lister ces putains de rules"
     }
