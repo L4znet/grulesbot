@@ -97,6 +97,10 @@
       "text": "C'est pas grave de dire une connerie si Macron a déjà fait cette même connerie (Par exemple, de dire crypter au lieu de chiffrer)"
     },
     {
+      "ruleNumber": 25,
+      "text": "Ne pas taper ce qu'Aymeric te dit de taper, peu importe que ce soit sur Google ou IRL..."
+    },
+    {
       "ruleNumber": 999,
       "text":"Si tu sais toujours toujours pas quoi faire.. fais un bot discord pour lister ces putains de rules"
     }
