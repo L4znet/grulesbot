@@ -10,7 +10,7 @@ const client = new Client({ intents: [
 
 
 const getRules = JSON.parse(fs.readFileSync("./rules.json"));
-const aymericId = "101272783849291776";
+const aymericId = "208262462942871553";
 const macsimId = "350663282383912970";
 const {createClient} = require('redis')
 const cron = require("node-cron");
@@ -37,9 +37,8 @@ const redisClient = createClient({
     }
 });
 
-const whitelist = ["https://media.discordapp.net", "https://tenor.com"]
-
-
+const whitelist = ["https://media.discordapp.net", "https://tenor.com", "https://vid.pr0gramm.c"
+, "https://www.reddit.com"]
 client.on('ready', async () => {
 
     await redisClient.connect()
