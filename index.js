@@ -38,7 +38,7 @@ const redisClient = createClient({
 });
 
 const whitelist = ["https://media.discordapp.net", "https://tenor.com", "https://vid.pr0gramm.c"
-, "https://www.reddit.com"]
+, "https://www.reddit.com", "https://maximelecouturier.fr"]
 client.on('ready', async () => {
 
     await redisClient.connect()
@@ -67,13 +67,13 @@ client.on('ready', async () => {
         toggleAumericCounterState(false)
     });
 
-    const isMessageContentALink = (message) => {
+    const isMessageContentALink = (message, rulenumber = 1) => {
         if (message.content.match(regex1)) {
 
             const result = whitelist.filter(whiteListItem => message.content.startsWith(whiteListItem))
 
             if(result.length === 0){
-                message.reply(getRule(1))
+                message.reply(getRule(rulenumber))
             }
         }
     }
@@ -82,7 +82,7 @@ client.on('ready', async () => {
     client.on("messageCreate", (message) => {
 
         if(message.author.id === macsimId){
-            isMessageContentALink(message)
+            isMessageContentALink(message, 23)
         }
 
         // Si quelqu'un écrit "Y'a rien" on envoi le gif
