@@ -67,8 +67,23 @@ client.on('ready', async () => {
         toggleAumericCounterState(false)
     });
 
+    const isMessageContentALink = (message) => {
+        if (message.content.match(regex1)) {
+
+            const result = whitelist.filter(whiteListItem => message.content.startsWith(whiteListItem))
+
+            if(result.length === 0){
+                message.reply(getRule(1))
+            }
+        }
+    }
+
 
     client.on("messageCreate", (message) => {
+
+        if(message.author.id === macsimId){
+            isMessageContentALink(message)
+        }
 
         // Si quelqu'un écrit "Y'a rien" on envoi le gif
         if (message.content.toLowerCase() === "y'a rien" || message.content.toLowerCase() === "y a rien") {
@@ -105,14 +120,8 @@ client.on('ready', async () => {
             }
 
             // Si Aymeric envoi un lien, on rappel la rule 1 !
-            if (message.content.match(regex1)) {
+            isMessageContentALink(message)
 
-                const result = whitelist.filter(whiteListItem => message.content.startsWith(whiteListItem))
-
-                if(result.length === 0){
-                    message.reply(getRule(1))
-                }
-            }
         }
     });
 });
