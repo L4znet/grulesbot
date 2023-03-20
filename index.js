@@ -38,7 +38,7 @@ const redisClient = createClient({
 });
 
 const whitelist = ["https://media.discordapp.net", "https://tenor.com", "https://vid.pr0gramm.c"
-, "https://www.reddit.com"]
+, "https://www.reddit.com", "https://thumbs.gfycat.com"]
 client.on('ready', async () => {
 
     await redisClient.connect()
